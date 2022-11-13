@@ -50,7 +50,7 @@ function VRUtilWeaponMenuOpen()
 		weapon_ar2		= {label = "l", font = "vrmod_HalfLife2"},
 		weapon_physcannon	= {label = "m", font = "vrmod_HalfLife2"},
 		weapon_stunstick	= {label = "n", font = "vrmod_HalfLife2"},
-		weapon_slam		= {label = "o", font = "vrmod_HalfLife2"},
+		 weapon_slam		= {label = "o", font = "vrmod_HalfLife2"},
 	}
 		
 	for k,v in pairs(LocalPlayer():GetWeapons()) do
@@ -82,16 +82,47 @@ function VRUtilWeaponMenuOpen()
 	
 	local renderCount = 0
 	
+	local _, convarValues = vrmod.GetConvars()
+	
 	local tmp = Angle(0,g_VR.tracking.hmd.ang.yaw-90,45) --Forward() = right, Right() = back, Up() = up (relative to panel, panel forward is looking at top of panel from middle of panel, up is normal)
 	local pos, ang = WorldToLocal( g_VR.tracking.pose_righthand.pos + tmp:Forward()*-9 + tmp:Right()*-11 + tmp:Up()*-7, tmp, g_VR.origin, g_VR.originAngle)
 	--uid, width, height, panel, attachment, pos, ang, scale, cursorEnabled, closeFunc
-	VRUtilMenuOpen("weaponmenu", 512, 512, nil, 4, pos, ang, 0.03, true, function()
-		hook.Remove("PreRender","vrutil_hook_renderweaponselect")
-		open = false
-		if items[prevValues.hoveredItem] and IsValid(items[prevValues.hoveredItem].wep) then
-			input.SelectWeapon(items[prevValues.hoveredItem].wep)
-		end
-	end)
+	
+	local mode = convarValues.vrmod_attach_weaponmenu
+	
+
+	if mode == 1 then
+		VRUtilMenuOpen("weaponmenu", 512, 512, nil, 1, Vector(4,6,15.5), Angle(0,-90,60), 0.03, true, function()
+			hook.Remove("PreRender","vrutil_hook_renderweaponselect")
+			open = false
+			if items[prevValues.hoveredItem] and IsValid(items[prevValues.hoveredItem].wep) then
+				input.SelectWeapon(items[prevValues.hoveredItem].wep)
+			end
+		end)
+
+		--
+	elseif mode == 3 then
+		VRUtilMenuOpen("weaponmenu", 512, 512, nil, 3, Vector(35,20,10), Angle(0,-90,90), 0.03, true, function() --forw, left, up
+			hook.Remove("PreRender","vrutil_hook_renderweaponselect")
+			open = false
+			if items[prevValues.hoveredItem] and IsValid(items[prevValues.hoveredItem].wep) then
+				input.SelectWeapon(items[prevValues.hoveredItem].wep)
+			end
+		end)
+		--
+			
+	else
+		VRUtilMenuOpen("weaponmenu",512, 512, nil, mode, pos, ang, 0.03, true, function()
+			hook.Remove("PreRender","vrutil_hook_renderweaponselect")
+			open = false
+			if items[prevValues.hoveredItem] and IsValid(items[prevValues.hoveredItem].wep) then
+				input.SelectWeapon(items[prevValues.hoveredItem].wep)
+			end
+		end)
+	end
+
+	
+
 	
 	hook.Add("PreRender","vrutil_hook_renderweaponselect",function()
 	

@@ -5,6 +5,11 @@ if CLIENT then
 	local chatPanel = nil
 	local nametags = false
 	
+	hook.Add("VRMod_Start","voicepermissions",function(ply)
+
+
+	end)
+	
 	local function toggleNametags()
 		nametags = not nametags
 		if nametags then
@@ -109,7 +114,7 @@ if CLIENT then
 			button:SetPos((i-1)*85,285)
 			button:SetSize(80,25)
 			button:SetTextColor( ((i==1 and LocalPlayer():IsSpeaking()) or (i==2 and nametags)) and Color(0,255,0,255) or Color(255,0,0,255) )
-			button:SetText(i == 1 and "Voice" or i == 2 and "Nametags" or "Keyboard")
+			button:SetText(i == 1 and "Voice" or i == 2 and "Console" or "Keyboard")
 			button:SetFont("HudSelectionText")
 			button:SetContentAlignment(5)
 			button:SetMouseInputEnabled(true)
@@ -121,7 +126,7 @@ if CLIENT then
 			end
 			button.OnMousePressed = function()
 				if i == 1 then
-					LocalPlayer():ConCommand(LocalPlayer():IsSpeaking() and "-voicerecord" or "+voicerecord")
+					permissions.EnableVoiceChat(not LocalPlayer():IsSpeaking())
 					timer.Simple(0.01,function()
 						chatPanel.button1:SetTextColor(LocalPlayer():IsSpeaking() and Color(0,255,0,255) or Color(255,0,0,255))
 					end)
@@ -145,8 +150,8 @@ if CLIENT then
 						surface.SetDrawColor( Color( 0, 0, 0, 255 ) )
 						surface.DrawOutlinedRect(0,0,w,h)
 					end
-					local lowerCase = "1234567890\1\nqwertyuiop\nasdfghjkl\2\n\3zxcvbnm,.\3\n "
-					local upperCase = "!\"#$%&/=?-\1\nQWERTYUIOP\nASDFGHJKL\2\n\3ZXCVBNM;:\3\n "
+					local lowerCase = "1234567890\1\nqwertyuiop\nasdfghjkl\2\n\3zxcvbnm*.\3\n "
+					local upperCase = "!\"#$%&+=?-\1\nQWERTYUIOP\nASDFGHJKL\2\n\3ZXCVBNM_:\3\n "
 					local selectedCase = lowerCase
 					local keys = {}
 					local function updateKeyboard()
@@ -175,8 +180,13 @@ if CLIENT then
 							if key:GetText() == "Back" then
 								chatPanel.msgbar:SetText(string.sub(chatPanel.msgbar:GetText(),1,#chatPanel.msgbar:GetText()-1))
 							elseif key:GetText() == "Enter" then
+								if nametags then
+								LocalPlayer():ConCommand(""..chatPanel.msgbar:GetText())
+								SetClipboardText(""..chatPanel.msgbar:GetText())
+								else
 								LocalPlayer():ConCommand("say "..chatPanel.msgbar:GetText())
 								chatPanel.msgbar:SetText("")
+								end
 							elseif key:GetText() == "Shift" then
 								selectedCase = (selectedCase == lowerCase) and upperCase or lowerCase
 								updateKeyboard()
@@ -252,5 +262,6 @@ if CLIENT then
 	vrmod.AddInGameMenuItem("Chat", 1, 0, function()
 		ToggleChat()
 	end)
+
 	
 end

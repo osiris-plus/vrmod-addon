@@ -56,7 +56,7 @@ local function OpenMenu()
 	panel.Paint = function(self,w,h) end
 	
 	local tmp = vgui.Create("DLabel", panel)
-		tmp:SetText("Addon version: "..vrmod.GetVersion().."\nModule version: "..vrmod.GetModuleVersion())
+		tmp:SetText("Addon version: "..vrmod.GetVersion().."unoffcial".."\nModule version: "..vrmod.GetModuleVersion())
 		tmp:SizeToContents()
 		tmp:SetPos(5,5)
 	
@@ -107,6 +107,7 @@ end
 concommand.Add( "vrmod", function( ply, cmd, args )
 	if vgui.CursorVisible() then
 		print("vrmod: menu will open when game is unpaused")
+
 	end
 	timer.Create("vrmod_open_menu",0.1,0,function()
 		if not vgui.CursorVisible() then
@@ -126,6 +127,10 @@ if convars.vrmod_showonstartup:GetBool() then
 		end)
 	end)
 end
+
+
+
+
 
 vrmod.AddInGameMenuItem("Settings", 4, 0, function()
 	OpenMenu()

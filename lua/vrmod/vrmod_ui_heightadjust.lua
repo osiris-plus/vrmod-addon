@@ -1,6 +1,8 @@
 if SERVER then return end
 
-local convars, convarValues = vrmod.GetConvars()
+	g_VR = g_VR or {}
+	g_VR.characterYaw = 0
+	local convars,convarValues = vrmod.GetConvars()
 
 function VRUtilOpenHeightMenu()
 	if not g_VR.threePoints or VRUtilIsMenuOpen("heightmenu") then return end
@@ -23,8 +25,8 @@ function VRUtilOpenHeightMenu()
 		local mirrorPos = Vector(g_VR.tracking.hmd.pos.x, g_VR.tracking.hmd.pos.y, g_VR.origin.z + 45) + Angle(0,mirrorYaw,0):Forward()*50
 		local mirrorAng = Angle(0,mirrorYaw-90,90)
 		
-		g_VR.menus.heightmenu.pos = mirrorPos + Vector(0,0,30) + mirrorAng:Forward()*-15
-		g_VR.menus.heightmenu.ang = mirrorAng
+		-- g_VR.menus.heightmenu.pos = mirrorPos + Vector(0,0,30) + mirrorAng:Forward()*-15
+		-- g_VR.menus.heightmenu.ang = mirrorAng
 		
 		local camPos = LocalToWorld( WorldToLocal( EyePos(), Angle(), mirrorPos, mirrorAng) * Vector(1,1,-1), Angle(), mirrorPos, mirrorAng)
 		local camAng = EyeAngles()
@@ -59,10 +61,24 @@ function VRUtilOpenHeightMenu()
 
 	--create controls
 	
-	VRUtilMenuOpen("heightmenu", 300, 512, nil, 0, Vector(), Angle(), 0.1, true, function()
-		hook.Remove("PreDrawTranslucentRenderables", "vrmodheightmirror")
-		hook.Remove("VRMod_Input","vrmodheightmenuinput")
-	end)
+	local mode = convarValues.vrmod_attach_heightmenu
+	
+	if mode == 0 then
+
+		VRUtilMenuOpen("heightmenu", 300, 512, nil, 0, Vector(), Angle(), 0.1, true, function()
+			hook.Remove("PreDrawTranslucentRenderables", "vrmodheightmirror")
+			hook.Remove("VRMod_Input","vrmodheightmenuinput")
+		end)
+
+	else
+	
+		VRUtilMenuOpen("heightmenu", 300, 512, nil, 1, Vector(4,6,15.5), Angle(0,-90,60), 0.03, true, function()
+			hook.Remove("PreDrawTranslucentRenderables", "vrmodheightmirror")
+			hook.Remove("VRMod_Input","vrmodheightmenuinput")
+		end)
+
+	end
+
 	
 	local buttons, renderControls
 	buttons = {
@@ -75,7 +91,7 @@ function VRUtilOpenHeightMenu()
 			convars.vrmod_scale:SetFloat(g_VR.scale)
 		end},
 		{x=250,y=255,w=50,h=50,text="Auto\nScale",font="Trebuchet24",text_x=25,text_y=0,enabled=not convarValues.vrmod_seated,fn=function()
-			g_VR.scale = 66.8 / ((g_VR.tracking.hmd.pos.z-g_VR.origin.z)/g_VR.scale)
+			g_VR.scale = convarValues.vrmod_characterEyeHeight / ((g_VR.tracking.hmd.pos.z-g_VR.origin.z)/g_VR.scale)
 			convars.vrmod_scale:SetFloat(g_VR.scale)
 		end},
 		{x=250,y=310,w=50,h=50,text="-",font="Trebuchet24",text_x=25,text_y=15,enabled=not convarValues.vrmod_seated,fn=function()
@@ -92,7 +108,7 @@ function VRUtilOpenHeightMenu()
 			renderControls()
 		end},
 		{x=0,y=255,w=50,h=50,text="Auto\nOffset",font="Trebuchet18",text_x=25,text_y=5,enabled=convarValues.vrmod_seated,fn=function() 
-			convars.vrmod_seatedoffset:SetFloat(66.8 - (g_VR.tracking.hmd.pos.z-convarValues.vrmod_seatedoffset-g_VR.origin.z)) 
+			convars.vrmod_seatedoffset:SetFloat(convarValues.vrmod_characterEyeHeight - (g_VR.tracking.hmd.pos.z-convarValues.vrmod_seatedoffset-g_VR.origin.z)) 
 		end},
 	}
 	

@@ -111,7 +111,7 @@ concommand.Add( "cardboardmod_start", function( ply, cmd, args )
 		end
 	end)
 	
-	vgui.GetWorldPanel():SetSize(1024,768)
+	vgui.GetWorldPanel():SetSize(ScrW(),ScrH())
 	--local panels = vgui.GetWorldPanel():GetChildren()
 	--panels[#panels+1] = GetHUDPanel()
 	--for k,v in pairs(panels) do
@@ -131,10 +131,10 @@ concommand.Add( "cardboardmod_start", function( ply, cmd, args )
 			surface.SetMaterial(mat_hud)
 			local tmp = render.GetToneMappingScaleLinear()
 			render.SetToneMappingScaleLinear(Vector(0.8,0.8,0.8))
-			surface.DrawTexturedRectUV(0,0,1024,768,0,0,1024/rtWidth,768/rtHeight)
+			surface.DrawTexturedRectUV(0,0,ScrW(),ScrH(),0,0,ScrW()/rtWidth,ScrH()/rtHeight)
 			render.SetToneMappingScaleLinear(tmp)
 			--surface.SetDrawColor(255,0,0,255)
-			--surface.DrawOutlinedRect(0,0,1024,768)
+			--surface.DrawOutlinedRect(0,0,ScrW(),ScrH())
 		cam.End3D2D()
 		cam.IgnoreZ(false)
 		
@@ -170,7 +170,7 @@ concommand.Add( "cardboardmod_start", function( ply, cmd, args )
 		cam.Start2D()
 		render.OverrideAlphaWriteEnable(true,true)
 		render.Clear(0,0,0,0,true,true)
-		render.RenderHUD(0,0,1024,768)
+		render.RenderHUD(0,0,ScrW(),ScrH())
 		for k,v in pairs(panels) do
 			if IsValid(v) and v:IsVisible() then
 				v:PaintManual()
@@ -206,7 +206,7 @@ concommand.Add( "cardboardmod_exit", function( ply, cmd, args )
 		RunConsoleCommand("spawnmenu_border", ogBorder)
 	end
 	RunConsoleCommand("viewmodel_fov", ogVMFOV)
-	vgui.GetWorldPanel():SetSize(ScrW(),ScrH())
+	vgui.GetWorldPanel():SetSize(ScrW()(),ScrH())
 end )
 		
 	

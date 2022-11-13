@@ -4,8 +4,22 @@ if CLIENT then
 	g_VR.viewModelInfo = g_VR.viewModelInfo or {}
 	
 	g_VR.viewModelInfo.autoOffsetAddPos = Vector(1,0.2, 0)
+
 	
 	g_VR.currentvmi = nil
+	
+	-- g_VR.viewModelInfo.arcticvr_fisttest = {
+		-- --modelOverride = "models/weapons/w_toolgun.mdl",
+		-- offsetPos = Vector(18, 30, 0), --forw, left, up
+		-- offsetAng = Angle(0, -90, 0),
+	-- }
+
+	-- g_VR.viewModelInfo.weapon_vrmod_empty = {
+		-- --modelOverride = "models/weapons/w_toolgun.mdl",
+		-- offsetPos = Vector(18, 30, 0), --forw, left, up
+		-- offsetAng = Angle(0, -90, 0),
+	-- }
+
 	
 	g_VR.viewModelInfo.gmod_tool = {
 		--modelOverride = "models/weapons/w_toolgun.mdl",
@@ -45,10 +59,10 @@ if CLIENT then
 	}
 	
 	g_VR.viewModelInfo.weapon_crowbar = {
-		wrongMuzzleAng = true --lol
+		 wrongMuzzleAng = true
 	}
 	
-	g_VR.viewModelInfo.weapon_stunstick = {
+	 g_VR.viewModelInfo.weapon_stunstick = {
 		wrongMuzzleAng = true
 	}
 	

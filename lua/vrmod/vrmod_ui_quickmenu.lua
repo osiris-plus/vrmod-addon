@@ -40,16 +40,67 @@ function g_VR.MenuOpen()
 	
 	local renderCount = 0
 	
+	local _, convarValues = vrmod.GetConvars()
+
+	
 	local tmp = Angle(0,g_VR.tracking.hmd.ang.yaw-90,60) --Forward() = right, Right() = back, Up() = up (relative to panel, panel forward is looking at top of panel from middle of panel, up is normal)
 	local pos, ang = WorldToLocal( g_VR.tracking.pose_righthand.pos + g_VR.tracking.pose_righthand.ang:Forward()*9 + tmp:Right()*-7.68 + tmp:Forward()*-6.45, tmp, g_VR.origin, g_VR.originAngle)
 	--uid, width, height, panel, attachment, pos, ang, scale, cursorEnabled, closeFunc
-	VRUtilMenuOpen("miscmenu", 512, 512, nil, 4, pos, ang, 0.03, true, function()
+	local mode = convarValues.vrmod_attach_quickmenu
+
+
+	if mode == 1 then
+	VRUtilMenuOpen("miscmenu",512, 512, nil, 1, Vector(4,6,5.5), Angle(0,-90,10), 0.03, true, function()
 		hook.Remove("PreRender","vrutil_hook_renderigm")
 		open = false
 		if items[prevHoveredItem] and g_VR.menuItems[items[prevHoveredItem].index] then
 			g_VR.menuItems[items[prevHoveredItem].index].func()
 		end
 	end)
+	--
+	elseif mode == 3 then
+	VRUtilMenuOpen("miscmenu",512, 512, nil, 3, Vector(35,20,10), Angle(0,-90,90), 0.03, true, function() --forw, left, up
+		hook.Remove("PreRender","vrutil_hook_renderigm")
+		open = false
+		if items[prevHoveredItem] and g_VR.menuItems[items[prevHoveredItem].index] then
+			g_VR.menuItems[items[prevHoveredItem].index].func()
+		end
+	end)
+	--
+	-- --
+	-- elseif mode == 4 then
+		-- local newpos = pos
+		-- local newang = ang
+
+		-- VRUtilMenuOpen("miscmenu",512, 512, nil, 4, newpos, newang, 0.03, true, function() --forw, left, up
+		-- hook.Remove("PreRender","vrutil_hook_renderigm")
+		-- open = false
+		-- if items[prevHoveredItem] and g_VR.menuItems[items[prevHoveredItem].index] then
+			-- g_VR.menuItems[items[prevHoveredItem].index].func()
+		-- end
+	-- end)
+	-- --
+
+
+	else
+		VRUtilMenuOpen("miscmenu",512, 512, nil, mode, pos, ang, 0.03, true, function()
+			hook.Remove("PreRender","vrutil_hook_renderigm")
+			open = false
+			if items[prevHoveredItem] and g_VR.menuItems[items[prevHoveredItem].index] then
+				g_VR.menuItems[items[prevHoveredItem].index].func()
+			end
+		end)
+	end
+
+
+
+	-- VRUtilMenuOpen("miscmenu",512, 512, nil, mode, Vector(4,6,5.5), Angle(0,-90,10), 0.03, true, function()  --512, 512, nil, 4, pos, ang, 0.03, true, function()
+		-- hook.Remove("PreRender","vrutil_hook_renderigm")
+		-- open = false
+		-- if items[prevHoveredItem] and g_VR.menuItems[items[prevHoveredItem].index] then
+			-- g_VR.menuItems[items[prevHoveredItem].index].func()
+		-- end
+	-- end)
 	
 	hook.Add("PreRender","vrutil_hook_renderigm",function()
 	

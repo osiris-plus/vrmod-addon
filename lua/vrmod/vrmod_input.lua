@@ -1,7 +1,18 @@
+local cl_bothkey = CreateClientConVar("vrmod_vehicle_bothkeymode","0",FCVAR_ARCHIVE)
+local cl_pickupdisable = CreateClientConVar("vr_pickup_disable_client","0",FCVAR_ARCHIVE)
+local cl_lefthand = CreateClientConVar("vrmod_LeftHand", "0") 
+local cl_lefthandfire = CreateClientConVar("vrmod_lefthandleftfire", "0") 
+
+
 if CLIENT then
 
+
 	hook.Add("VRMod_EnterVehicle","vrmod_switchactionset",function()
-		VRMOD_SetActiveActionSets("/actions/base", "/actions/driving")
+		if cl_bothkey:GetBool() then
+			LocalPlayer():ConCommand("vrmod_keymode_both")
+		else
+			VRMOD_SetActiveActionSets( "/actions/base","/actions/driving")	
+		end
 	end)
 	
 	hook.Add("VRMod_ExitVehicle","vrmod_switchactionset",function()
@@ -23,14 +34,45 @@ if CLIENT then
 			return
 		end
 		
+		if action == "boolean_forword" then
+			LocalPlayer():ConCommand(pressed and "+forward" or "-forward")
+			return
+		end
+		
+		if action == "boolean_back" then
+			LocalPlayer():ConCommand(pressed and "+back" or "-back")
+			return
+		end
+
+		if action == "boolean_left" then
+			LocalPlayer():ConCommand(pressed and "+moveleft" or "-moveleft")
+			return
+		end
+
+		if action == "boolean_right" then
+			LocalPlayer():ConCommand(pressed and "+moveright" or "-moveright")
+			return
+		end
+
+		
 		if action == "boolean_left_pickup" then
+			if cl_pickupdisable:GetBool() then return end
 			vrmod.Pickup(true, not pressed)
 			return
 		end
 		
 		if action == "boolean_right_pickup" then
+			if cl_pickupdisable:GetBool() then return end
 			vrmod.Pickup(false, not pressed)
 			return
+		end
+
+		if action == "boolean_lefthandmode" then
+			LocalPlayer():ConCommand("vrmod_lefthand 1")
+		end
+		
+		if action == "boolean_righthandmode" then
+			LocalPlayer():ConCommand("vrmod_lefthand 0")
 		end
 		
 		if action == "boolean_use" or action == "boolean_exit" then
@@ -90,6 +132,82 @@ if CLIENT then
 			end
 			return
 		end
+		
+
+		if action == "boolean_chat" then
+		LocalPlayer():ConCommand(pressed and "+zoom" or "-zoom")
+			return
+		end
+
+
+		
+		if action == "boolean_walkkey" then
+			LocalPlayer():ConCommand(pressed and "+walk" or "-walk")
+			return
+		end
+
+		if action == "boolean_menucontext" then
+			LocalPlayer():ConCommand(pressed and "+menu_context" or "-menu_context")
+			return
+		end
+		
+		if (action == "boolean_left_primaryfire") and not g_VR.menuFocus and cl_lefthand:GetBool() and cl_lefthandfire:GetBool() then
+			LocalPlayer():ConCommand(pressed and "+attack" or "-attack")
+			return
+		end
+
+		if (action == "boolean_left_secondaryfire") and not g_VR.menuFocus and cl_lefthand:GetBool() and cl_lefthandfire:GetBool() then
+			LocalPlayer():ConCommand(pressed and "+attack2" or "-attack2")
+			return
+		end
+
+
+
+		if action == "boolean_slot1" then
+			if pressed then
+				LocalPlayer():ConCommand("slot1")
+			end
+			return
+		end
+		
+		if action == "boolean_slot2" then
+			if pressed then
+				LocalPlayer():ConCommand("slot2")
+			end
+			return
+		end
+
+		if action == "boolean_slot3" then
+			if pressed then
+				LocalPlayer():ConCommand("slot3")
+			end
+			return
+		end
+
+		if action == "boolean_slot4" then
+			if pressed then
+				LocalPlayer():ConCommand("slot4")
+			end
+			return
+		end
+
+		if action == "boolean_slot5" then
+			if pressed then
+				LocalPlayer():ConCommand("slot5")
+			end
+			return
+		end
+
+		if action == "boolean_slot6" then
+			if pressed then
+				LocalPlayer():ConCommand("slot6")
+			end
+			return
+		end
+
+
+
+		
 		
 		for i = 1,#g_VR.CustomActions do
 			if action == g_VR.CustomActions[i][1] then

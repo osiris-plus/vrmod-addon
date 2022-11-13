@@ -1,11 +1,10 @@
 {
-	"title"		:	"VRMod",
-	"type"		:	"tool",
-	"tags"		:	[ "realism" ],
-	"ignore"	:
-	[
-		"*.psd",
-		"*.vcproj",
-		"*.svn*"
-	]
+  "title": "[VRmod]VRMod-semioffcialPatch",
+  "type": "tool",
+  "tags": [
+    "fun",
+    "roleplay",
+    "realism"
+  ],
+  "ignore": []
 }

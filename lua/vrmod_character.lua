@@ -384,7 +384,7 @@ if CLIENT then
 			b_rightFoot = "ValveBiped.Bip01_R_Foot",
 			b_head = "ValveBiped.Bip01_Head1",
 			b_spine = "ValveBiped.Bip01_Spine",
-			-- b_neck ="ValveBiped.Bip01_Neck1",
+			b_neck ="ValveBiped.Bip01_Neck1",
 		}
 		characterInfo[steamid].bones = {
 			fingers = {
@@ -450,7 +450,7 @@ if CLIENT then
 		local footPos = cm:GetBonePosition(characterInfo[steamid].bones.b_leftFoot)
 		local headPos = cm:GetBonePosition(characterInfo[steamid].bones.b_head)
 		local spinePos = cm:GetBonePosition(characterInfo[steamid].bones.b_spine)
-		-- local neckpos = cm:GetBonePosition(characterInfo[steamid].bones.b_neck)
+		local neckpos = cm:GetBonePosition(characterInfo[steamid].bones.b_neck)
 
 		characterInfo[steamid].clavicleLen = claviclePos:Distance(upperPos)
 		characterInfo[steamid].upperArmLen = upperPos:Distance(lowerPos)
@@ -541,9 +541,8 @@ if CLIENT then
 		if ply == LocalPlayer() then
 			local ep = EyePos()
 			local hide = (ep == g_VR.eyePosLeft or ep == g_VR.eyePosRight) and ply:GetViewEntity() == ply
-			ply:ManipulateBoneScale(characterInfo[steamid].bones.b_head, hide and zeroVec or Vector(1,1,1))
-			-- ply:ManipulateBonePosition(characterInfo[steamid].bones.b_neck, hide and zerovec or Vector(-128, 128, 0))
-
+			ply:ManipulateBoneScale(characterInfo[steamid].bones.b_head, hide and zeroVec or Vector(-128, 128, 0)
+			ply:ManipulateBonePosition(characterInfo[steamid].bones.b_neck, hide and zerovec or Vector(-128, 128, 0))
 		
 		end
 		
@@ -643,7 +642,7 @@ if CLIENT then
 				if ply == LocalPlayer() then
 					hook.Remove( "VRMod_PreRender", "vrutil_hook_calcplyrenderpos")
 					ply:ManipulateBoneScale(characterInfo[steamid].bones.b_head, Vector(1,1,1))
-					-- ply:ManipulateBonePosition(characterInfo[steamid].bones.b_head, vector_origin)
+					ply:ManipulateBonePosition(characterInfo[steamid].bones.b_head, vector_origin)
 
 				end
 			end

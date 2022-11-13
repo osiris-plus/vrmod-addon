@@ -3,6 +3,16 @@ if CLIENT then
 	g_VR.menuFocus = false
 	g_VR.menuCursorX = 0
 	g_VR.menuCursorY = 0
+	local _, convarValues = vrmod.GetConvars()
+	
+	vrmod.AddCallbackedConvar("vrmod_test_ui_testver", nil, 0,nil, "", 0, 1, tonumber)--cvarName, valueName, defaultValue, flags, helptext, min, max, conversionFunc, callbackFunc
+	vrmod.AddCallbackedConvar("vrmod_ui_realtime", nil, 1,nil, "", 0, 1, tonumber)--cvarName, valueName, defaultValue, flags, helptext, min, max, conversionFunc, callbackFunc
+	vrmod.AddCallbackedConvar("vrmod_attach_weaponmenu", nil, 1,nil, "", 0, 4, tonumber)
+	vrmod.AddCallbackedConvar("vrmod_attach_quickmenu", nil, 1,nil, "", 0, 4, tonumber)
+	vrmod.AddCallbackedConvar("vrmod_attach_popup", nil, 1,nil, "", 0, 4, tonumber)
+	vrmod.AddCallbackedConvar("vrmod_attach_heightmenu", nil, 1,nil, "", 0, 4, tonumber)
+
+
 	
 	local rt_beam = GetRenderTarget("vrmod_rt_beam",64,64,false)
 	local mat_beam = CreateMaterial("vrmod_mat_beam", "UnlitGeneric",{ ["$basetexture"] = rt_beam:GetName() })
@@ -123,6 +133,10 @@ if CLIENT then
 			render.SetMaterial(mat_beam)
 			render.DrawBeam(g_VR.tracking.pose_righthand.pos, menuFocusCursorWorldPos, 0.1, 0, 0, Color(255,255,255,255))
 			input.SetCursorPos(g_VR.menuCursorX,g_VR.menuCursorY)
+		-- realtime ui start
+				if convarValues.vrmod_ui_realtime == 1 then
+					VRUtilMenuRenderPanel(g_VR.menuFocus)
+				end
 		end
 		render.DepthRange(0,1)
 	end
@@ -206,6 +220,59 @@ if CLIENT then
 			end
 			VRUtilMenuRenderPanel(g_VR.menuFocus)
 		end
+		
+		if g_VR.menuFocus and action == "boolean_secondaryfire" then
+			if pressed then
+				gui.InternalMousePressed(MOUSE_RIGHT)
+			else
+				gui.InternalMouseReleased(MOUSE_RIGHT)
+			end
+			VRUtilMenuRenderPanel(g_VR.menuFocus)
+		end
+		
+		-- if g_VR.menuFocus and action == "boolean_right_pickup" then
+			-- VRUtilMenuRenderPanel(g_VR.menuFocus)
+		-- end
+		
+		-- if g_VR.menuFocus and action == "boolean_sprint" then
+			-- if pressed then
+				-- gui.InternalMousePressed(MOUSE_MIDDLE)
+			-- else
+				-- gui.InternalMouseReleased(MOUSE_MIDDLE)
+			-- end
+			-- VRUtilMenuRenderPanel(g_VR.menuFocus)
+		-- end
+
+		if g_VR.menuFocus and action == "boolean_back" then
+			if pressed then
+				gui.InternalMouseWheeled(-1)
+			else
+				gui.InternalMouseWheeled(-1)
+			end
+			VRUtilMenuRenderPanel(g_VR.menuFocus)
+		end
+
+		if g_VR.menuFocus and action == "boolean_forword" then
+			if pressed then
+				gui.InternalMouseWheeled(1)
+			else
+				gui.InternalMouseWheeled(1)
+			end
+			VRUtilMenuRenderPanel(g_VR.menuFocus)
+		end
+
+		-- if g_VR.menuFocus and action == "boolean_left_pickup" then
+			-- if pressed then
+				-- gui.InternalKeyCodePressed(KEY_LCONTROL)
+				-- gui.InternalKeyCodePressed(KEY_V)
+			-- else
+				-- gui.InternalKeyCodeReleased(KEY_LCONTROL)
+				-- gui.InternalKeyCodeReleased(KEY_V)
+			-- end
+			-- VRUtilMenuRenderPanel(g_VR.menuFocus)
+		-- end
+
+
 	end)
 
 	

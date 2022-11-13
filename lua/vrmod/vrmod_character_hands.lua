@@ -2,8 +2,11 @@ if SERVER then return end
 
 local hands
 
+CreateClientConVar("vrmod_floatinghands_material", "models/dog/eyeglass",FCVAR_ARCHIVE)
+CreateClientConVar("vrmod_floatinghands_model", "",FCVAR_ARCHIVE)
+
 local convars = vrmod.GetConvars()
-	
+
 hook.Add("VRMod_Start","vrmod_starthandsonly",function(ply)
 	if not ( ply==LocalPlayer() and convars.vrmod_floatinghands:GetBool() ) then return end
 	timer.Simple(0,function()
@@ -13,13 +16,13 @@ hook.Add("VRMod_Start","vrmod_starthandsonly",function(ply)
 	local zeroVec, zeroAng = Vector(), Angle()
 	local steamid = LocalPlayer():SteamID()
 	
-	hands = ClientsideModel("models/player/vr_hands.mdl")
+	hands = ClientsideModel(GetConVar("vrmod_floatinghands_model"):GetString())
 	hands:SetupBones()
 	g_VR.hands = hands
+	hands:SetMaterial(GetConVar("vrmod_floatinghands_material"):GetString())
 	
 	local leftHand = hands:LookupBone("ValveBiped.Bip01_L_Hand")
 	local rightHand = hands:LookupBone("ValveBiped.Bip01_R_Hand")
-	
 	local fingerboneids = {}
 	local tmp = {"0","01","02","1","11","12","2","21","22","3","31","32","4","41","42"}
 	for i = 1,30 do

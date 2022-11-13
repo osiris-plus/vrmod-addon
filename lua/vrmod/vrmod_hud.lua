@@ -30,7 +30,7 @@ local function CurvedPlane(w,h,segments,degrees, matrix)
 	return mesh
 end
 
-local rt = GetRenderTarget("vrmod_hud", 1366, 768, false)
+local rt = GetRenderTarget("vrmod_hud", ScrW(), ScrH(), false)
 local mat = Material("!vrmod_hud")
 mat = not mat:IsError() and mat or CreateMaterial("vrmod_hud", "UnlitGeneric",{ ["$basetexture"] = rt:GetName(), ["$translucent"] = 1 })
 		
@@ -51,10 +51,10 @@ local function AddHUD()
 	RemoveHUD()
 	if not g_VR.active or not convarValues.vrmod_hud then return end
 	local mtx = Matrix()
-	mtx:Translate(Vector(0,0,768*convarValues.vrmod_hudscale/2))
+	mtx:Translate(Vector(0,0,ScrH()*convarValues.vrmod_hudscale/2))
 	mtx:Rotate(Angle(0,-90,-90))
 	local meshName = convarValues.vrmod_hudscale.."_"..convarValues.vrmod_hudcurve
-	hudMeshes[meshName] = hudMeshes[meshName] or CurvedPlane(1366*convarValues.vrmod_hudscale,768*convarValues.vrmod_hudscale,10,convarValues.vrmod_hudcurve,mtx)
+	hudMeshes[meshName] = hudMeshes[meshName] or CurvedPlane(ScrW()*convarValues.vrmod_hudscale,ScrH()*convarValues.vrmod_hudscale,10,convarValues.vrmod_hudcurve,mtx)
 	hudMesh = hudMeshes[meshName]
 	local blacklist = {}
 	for k,v in ipairs( string.Explode(",",convarValues.vrmod_hudblacklist) ) do
@@ -72,7 +72,7 @@ local function AddHUD()
 		render.PushRenderTarget(rt)
 		render.OverrideAlphaWriteEnable(true,true)
 		render.Clear(0,0,0,convarValues.vrmod_hudtestalpha,true,true)
-		render.RenderHUD(0,0,1366,768)
+		render.RenderHUD(0,0,ScrW(),ScrH())
 		render.OverrideAlphaWriteEnable(false)
 		render.PopRenderTarget()
 		mtx:Identity()
@@ -92,7 +92,7 @@ local function AddHUD()
 	end
 end
 
-vrmod.AddCallbackedConvar("vrmod_hud", nil, "0", nil, nil, nil, nil, tobool, AddHUD)
+vrmod.AddCallbackedConvar("vrmod_hud", nil, "1", nil, nil, nil, nil, tobool, AddHUD)
 vrmod.AddCallbackedConvar("vrmod_hudblacklist", nil, "", nil, nil, nil, nil, nil, AddHUD)
 vrmod.AddCallbackedConvar("vrmod_hudcurve", nil, "60", nil, nil, nil, nil, tonumber, AddHUD)
 vrmod.AddCallbackedConvar("vrmod_hudscale", nil, "0.05", nil, nil, nil, nil, tonumber, AddHUD)

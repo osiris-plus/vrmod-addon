@@ -4,7 +4,20 @@ vrmod = vrmod or {}
 
 scripted_ents.Register({Type = "anim", Base = "vrmod_pickup"}, "vrmod_pickup")
 
+local _, convarValues = vrmod.GetConvars()
+
+vrmod.AddCallbackedConvar("vrmod_pickup_limit", nil, 0, FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE, "", 0, 2, tonumber)--cvarName, valueName, defaultValue, flags, helptext, min, max, conversionFunc, callbackFunc
+vrmod.AddCallbackedConvar("vrmod_test_pickup_limit_droptest", nil, 1,  FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE, "", 0, 2, tonumber)--cvarName, valueName, defaultValue, flags, helptext, min, max, conversionFunc, callbackFunc
+vrmod.AddCallbackedConvar("vrmod_pickup_range", nil, 1.0,  FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE, "",1.0, 999.0, tonumber)--cvarName, valueName, defaultValue, flags, helptext, min, max, conversionFunc, callbackFunc
+
+vrmod.AddCallbackedConvar("vrmod_pickup_weight", nil, 30,  FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE, "", 0, 99999, tonumber)--cvarName, valueName, defaultValue, flags, helptext, min, max, conversionFunc, callbackFunc
+
+
+
+
+
 if CLIENT then
+
 
 	function vrmod.Pickup( bLeftHand, bDrop )
 		net.Start("vrmod_pickup")
@@ -58,6 +71,7 @@ if CLIENT then
 			end
 			--]]
 			hook.Call("VRMod_Pickup", nil, ply, ent)
+			
 		end
 	end)
 	
@@ -75,7 +89,13 @@ elseif SERVER then
 			local t = pickupList[i]
 			if t.steamid ~= steamid or t.left ~= bLeftHand then continue end
 			local phys = t.phys
-			if IsValid(phys) then
+--peszone
+					if not t or not t.ent then
+									drop(t.steamid, t.left)
+					break
+					end
+--peszone end
+			if IsValid(phys) and IsValid(t.ent) then
 				t.ent:SetCollisionGroup(t.collisionGroup)
 				pickupController:RemoveFromMotionController(phys)
 				if handPos then
@@ -87,6 +107,7 @@ elseif SERVER then
 					phys:Wake()
 				end
 			end
+			
 			net.Start("vrmod_pickup")
 				net.WriteEntity(t.ply)
 				net.WriteEntity(t.ent)
@@ -115,8 +136,19 @@ elseif SERVER then
 		local pickupPoint = LocalToWorld(Vector(3, bLeftHand and -1.5 or 1.5,0), Angle(), handPos, handAng)
 		local entities = ents.FindInSphere(pickupPoint,100)
 		for k = 1,#entities do local v = entities[k]
-			if not IsValid(v) or not IsValid(v:GetPhysicsObject()) or not v:GetPhysicsObject():IsMoveable() or v:GetPhysicsObject():GetMass() > 35 or v:GetPhysicsObject():HasGameFlag(FVPHYSICS_MULTIOBJECT_ENTITY) or ( v.CPPICanPickup ~= nil and not v:CPPICanPickup(ply) ) then continue end
-			if not WorldToLocal(pickupPoint - v:GetPos(), Angle(), Vector(), v:GetAngles()):WithinAABox(v:OBBMins(), v:OBBMaxs()) then continue end
+--pescorrzonestart
+			if convarValues.vrmod_pickup_limit == 2 then return end
+
+
+			if convarValues.vrmod_pickup_limit == 1 then
+				 if not IsValid(v) or not IsValid(v:GetPhysicsObject()) or ply:InVehicle() or not v:GetPhysicsObject():IsMoveable() or v:GetPhysicsObject():GetMass() > convarValues.vrmod_pickup_weight or v:GetPhysicsObject():HasGameFlag(FVPHYSICS_MULTIOBJECT_ENTITY) or v == ply or ( v.CPPICanPickup ~= nil and not v:CPPICanPickup(ply) ) then continue end
+			end
+
+			if convarValues.vrmod_pickup_limit == 0 then
+				if not IsValid(v) or not IsValid(v:GetPhysicsObject()) or v == ply or ply:InVehicle() or v:GetPhysicsObject():GetMass() > convarValues.vrmod_pickup_weight then continue end
+			end
+--pescorrzoneend
+			if not WorldToLocal(pickupPoint - v:GetPos(), Angle(), Vector(), v:GetAngles()):WithinAABox(v:OBBMins()*convarValues.vrmod_pickup_range, v:OBBMaxs()*convarValues.vrmod_pickup_range) then continue end
 			if hook.Call("VRMod_Pickup", nil, ply, v) == false then return end
 			--
 			if pickupController == nil then
@@ -133,6 +165,7 @@ elseif SERVER then
 					deltatime = 0,
 				}
 				function pickupController:PhysicsSimulate( phys, deltatime )
+
 					phys:Wake()
 					local t = phys:GetEntity().vrmod_pickup_info
 					local frame = g_VR[t.steamid] and g_VR[t.steamid].latestFrame
@@ -147,10 +180,35 @@ elseif SERVER then
 					--drop items that have become immovable or invalid
 					for i = 1,pickupCount do
 						local t = pickupList[i]
-						if not IsValid(t.phys) or not t.phys:IsMoveable() or not g_VR[t.steamid] or not t.ply:Alive() or t.ply:InVehicle() then
-							--print("dropping invalid")
-							drop(t.steamid, t.left)
+						if t == nil then
+							i = 0
+							break
 						end
+
+--pescorrzonestart
+
+						if convarValues.vrmod_test_pickup_limit_droptest == 2 then
+									drop(t.steamid, t.left)
+						end
+
+
+						if convarValues.vrmod_test_pickup_limit_droptest == 1 then
+							if not IsValid(t.phys) or not t.phys:IsMoveable() or not g_VR[t.steamid] or not t.ply:Alive() or t.ply:InVehicle() 	then
+								if not g_VR[t.steamid] or t.ply:InVehicle() then
+								--print("dropping invalid")
+									drop(t.steamid, t.left)
+								end
+							end
+						end
+						
+						if convarValues.vrmod_test_pickup_limit_droptest == 0 then
+							if not g_VR[t.steamid] or t.ply:InVehicle() then
+							--print("dropping invalid")
+								drop(t.steamid, t.left)
+							end
+						end
+						
+--pescorrzoneend
 					end
 				end)
 			end
@@ -202,11 +260,21 @@ elseif SERVER then
 		end
 	end)
 	
-	--block the gmod default pickup for vr players
-	hook.Add("AllowPlayerPickup","vrmod",function(ply)
-		if g_VR[ply:SteamID()] ~= nil then
-			return false
-		end
+	hook.Add("VRMod_Exit","pickupreset",function(ply,ent)
+	-- pickupCount = 0
+	hook.Call("VRMod_Drop", nil, ply, ent)
+	-- table.remove(g_VR[ply:SteamID()].heldItems)
 	end)
 
+											   
+												
+													
+	
+	--block the gmod default pickup for vr players
+		hook.Add("AllowPlayerPickup","vrmod",function(ply)
+			if g_VR[ply:SteamID()] ~= nil then
+				return false
+			end
+		end)
+	
 end

@@ -128,7 +128,7 @@ end
 
 if CLIENT then
 
-	vrmod.AddCallbackedConvar("vrmod_net_delay", nil, "0.1", nil, nil, nil, nil, tonumber, nil)
+	vrmod.AddCallbackedConvar("vrmod_net_delay", nil, "0.05", nil, nil, nil, nil, tonumber, nil)
 	vrmod.AddCallbackedConvar("vrmod_net_delaymax", nil, "0.2", nil, nil, nil, nil, tonumber, nil)
 	vrmod.AddCallbackedConvar("vrmod_net_storedframes", nil, "15", nil, nil, nil, nil, tonumber, nil)
 	
@@ -631,7 +631,7 @@ elseif SERVER then
 			local ply = player.GetBySteamID(steamid)
 			ply:SetCurrentViewOffset(ply.originalViewOffset)
 			ply:SetViewOffset(ply.originalViewOffset)
-			ply:StripWeapon("weapon_vrmod_empty")
+			-- ply:StripWeapon("weapon_vrmod_empty")
 			
 			--relay exit message to everyone
 			net.Start("vrutil_net_exit")
@@ -705,8 +705,8 @@ elseif SERVER then
 	
 	hook.Add("PlayerEnteredVehicle","vrutil_hook_playerenteredvehicle",function(ply, veh)
 		if g_VR[ply:SteamID()] ~= nil then
-			ply:SelectWeapon("weapon_vrmod_empty")
-			ply:SetActiveWeapon(ply:GetWeapon("weapon_vrmod_empty"))
+			-- ply:SelectWeapon("weapon_vrmod_empty")
+			-- ply:SetActiveWeapon(ply:GetWeapon("weapon_vrmod_empty"))
 			net.Start("vrutil_net_entervehicle")
 			net.Send(ply)
 		end

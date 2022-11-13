@@ -233,7 +233,8 @@ local function CreateMapBrowserWindow()
 	return window
 end
 
-vrmod.AddInGameMenuItem("Map Browser", 0, 0, function()
+
+concommand.Add( "vrmod_mapbrowser", function( ply, cmd, args )
 	CreateMapBrowserWindow()
 	hook.Add("VRMod_OpenQuickMenu","closemapbrowser",function()
 		hook.Remove("VRMod_OpenQuickMenu","closemapbrowser")
@@ -243,4 +244,15 @@ vrmod.AddInGameMenuItem("Map Browser", 0, 0, function()
 		end
 	end)
 end)
+
+-- vrmod.AddInGameMenuItem("Map Browser", 0, 0, function()
+	-- CreateMapBrowserWindow()
+	-- hook.Add("VRMod_OpenQuickMenu","closemapbrowser",function()
+		-- hook.Remove("VRMod_OpenQuickMenu","closemapbrowser")
+		-- if IsValid(window) then
+			-- window:Remove()
+			-- return false
+		-- end
+	-- end)
+-- end)
 
