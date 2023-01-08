@@ -5,6 +5,12 @@ if CLIENT then
 	local chatPanel = nil
 	local nametags = false
 	
+	hook.Add("VRMod_Start","voicepermissions",function(ply)
+		if ply ~= LocalPlayer() then return end
+		permissions.EnableVoiceChat(true)
+		permissions.EnableVoiceChat(false)
+	end)
+	
 	local function toggleNametags()
 		nametags = not nametags
 		if nametags then
@@ -121,7 +127,7 @@ if CLIENT then
 			end
 			button.OnMousePressed = function()
 				if i == 1 then
-					LocalPlayer():ConCommand(LocalPlayer():IsSpeaking() and "-voicerecord" or "+voicerecord")
+					permissions.EnableVoiceChat(not LocalPlayer():IsSpeaking())
 					timer.Simple(0.01,function()
 						chatPanel.button1:SetTextColor(LocalPlayer():IsSpeaking() and Color(0,255,0,255) or Color(255,0,0,255))
 					end)

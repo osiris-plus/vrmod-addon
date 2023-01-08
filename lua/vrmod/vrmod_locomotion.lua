@@ -35,7 +35,7 @@ hook.Add("VRMod_Input","teleport",function( action, pressed )
 					local nextPos = controllerPos+controllerDir*50*d+Vector(0,0,-d*d*3)
 					local v = nextPos-prevPos
 					if not hit then
-						local tr = util.TraceLine({start=prevPos, endpos = prevPos+v, filter = LocalPlayer()})
+						local tr = util.TraceLine({start=prevPos, endpos = prevPos+v, filter = LocalPlayer(), mask = MASK_PLAYERSOLID})
 						hit = tr.Hit
 						if hit then
 							tpBeamMatrices[1] = Matrix()

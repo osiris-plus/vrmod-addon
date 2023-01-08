@@ -1,6 +1,13 @@
 if SERVER then return end
 
 local changelog = [[
+Version 133:
+-fixed teleport beam not stopping at playerclips
+-fixed voice permission popup appearing for all players in multiplayer when someone enters vr
+
+Version 132:
+-updated voice chat to use new permission system introduced in a gmod update
+
 Version 131:
 -adjusted default values for vrmod_net_ convars, this should also fix an issue some people had with vr player animations getting stuck on listen servers
 -added vrmod_info concmd which can be used to provide some details for troubleshooting
