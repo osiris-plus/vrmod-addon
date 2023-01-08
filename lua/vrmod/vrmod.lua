@@ -332,7 +332,7 @@ if CLIENT then
 				
 		g_VR.active = true
 
-		overrideConvar("gmod_mcore_test", "0")
+		-- overrideConvar("gmod_mcore_test", "0")
 		overrideConvar("lfs_hipster", "0")
 		overrideConvar("playerscaling_clientspeed", "0")
 		overrideConvar("playerscaling_clientjump", "0")
@@ -397,6 +397,7 @@ if CLIENT then
 		local mat_rt = CreateMaterial("vrmod_mat_rt"..tostring(SysTime()), "UnlitGeneric",{ ["$basetexture"] = g_VR.rt:GetName() })
 			
 		local localply = LocalPlayer()
+		local cameraover = CreateClientConVar("vrmod_cameraoverride","1",FCVAR_ARCHIVE)
 		local currentViewEnt = localply
 		local pos1, ang1
 		local uselefthand = CreateClientConVar("vrmod_LeftHand","0",FCVAR_ARCHIVE)
@@ -466,7 +467,7 @@ if CLIENT then
 								if b then
 									local mtx = g_VR.viewModel:GetBoneMatrix(b)
 									netFrame.lefthandPos = mtx:GetTranslation()
-									netFrame.lefthandAng = mtx:GetAngles() - Angle(-20,0,180)
+									netFrame.lefthandAng = mtx:GetAngles() - Angle(0,0,180)
 								end
 							end
 						end
@@ -589,7 +590,7 @@ if CLIENT then
 			hook.Call("VRMod_PostRender")
 			
 			--return true to override default scene rendering
-			return true
+			return cameraover:GetBool()
 		end)
 		
 		g_VR.usingWorldModels = convars.vrmod_useworldmodels:GetBool()

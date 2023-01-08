@@ -6,9 +6,17 @@ surface.CreateFont( "vrmod_Trebuchet24", {
 	weight = 100
 } )
 
+local menushutdown = CreateClientConVar("vrmod_open_menu_shutdown","0",FCVAR_ARCHIVE)
+
+
 local frame = nil
 
 local function OpenMenu()
+
+	if menushutdown:GetBool() then
+		LocalPlayer():ConCommand("vrmod_exit")
+	end
+	
 	if IsValid(frame) then return frame end
 
 	frame = vgui.Create("DFrame")
@@ -56,10 +64,15 @@ local function OpenMenu()
 	panel.Paint = function(self,w,h) end
 	
 	local tmp = vgui.Create("DLabel", panel)
-		tmp:SetText("Addon version: "..vrmod.GetVersion().."unoffcial".."\nModule version: "..vrmod.GetModuleVersion())
+	if vrmod.GetModuleVersion() == 0 then
+		tmp:SetText("Addon version: "..vrmod.GetVersion().."semioffcial".."\n!!!!Module ERROR!!!!")
 		tmp:SizeToContents()
 		tmp:SetPos(5,5)
-	
+	else
+		tmp:SetText("Addon version: "..vrmod.GetVersion().."semioffcial".."\nModule version: "..vrmod.GetModuleVersion())
+		tmp:SizeToContents()
+		tmp:SetPos(5,5)
+	end
 	local tmp = vgui.Create("DButton", panel)
 	tmp:SetText("Exit")
 	tmp:Dock( RIGHT )
@@ -127,8 +140,6 @@ if convars.vrmod_showonstartup:GetBool() then
 		end)
 	end)
 end
-
-
 
 
 

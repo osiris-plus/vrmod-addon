@@ -1,6 +1,10 @@
 if SERVER then return end
 
 local changelog = [[
+Version 133:
+-fixed teleport beam not stopping at playerclips
+-fixed voice permission popup appearing for all players in multiplayer when someone enters vr
+
 Version 132:
 -updated voice chat to use new permission system introduced in a gmod update
 

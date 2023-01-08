@@ -1,4 +1,4 @@
-local addonVersion = 132
+local addonVersion = 133
 local requiredModuleVersion = 20
 local latestModuleVersion = 21
 

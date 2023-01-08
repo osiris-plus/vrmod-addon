@@ -50,7 +50,7 @@ function VRUtilWeaponMenuOpen()
 		weapon_ar2		= {label = "l", font = "vrmod_HalfLife2"},
 		weapon_physcannon	= {label = "m", font = "vrmod_HalfLife2"},
 		weapon_stunstick	= {label = "n", font = "vrmod_HalfLife2"},
-		 weapon_slam		= {label = "o", font = "vrmod_HalfLife2"},
+		weapon_slam		= {label = "o", font = "vrmod_HalfLife2"},
 	}
 		
 	for k,v in pairs(LocalPlayer():GetWeapons()) do

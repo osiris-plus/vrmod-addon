@@ -705,10 +705,11 @@ elseif SERVER then
 	
 	hook.Add("PlayerEnteredVehicle","vrutil_hook_playerenteredvehicle",function(ply, veh)
 		if g_VR[ply:SteamID()] ~= nil then
-			-- ply:SelectWeapon("weapon_vrmod_empty")
-			-- ply:SetActiveWeapon(ply:GetWeapon("weapon_vrmod_empty"))
+			ply:SelectWeapon("weapon_vrmod_empty")
+			ply:SetActiveWeapon(ply:GetWeapon("weapon_vrmod_empty"))
 			net.Start("vrutil_net_entervehicle")
 			net.Send(ply)
+			ply:SetAllowWeaponsInVehicle(1)
 		end
 	end)
 	

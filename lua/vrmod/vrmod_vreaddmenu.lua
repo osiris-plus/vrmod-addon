@@ -163,7 +163,7 @@ function VREaddvrmenuOpen()
 					LocalPlayer():ConCommand("vrmod_pickup_range 99.00")
 				else
 					button3on = 0
-					LocalPlayer():ConCommand("vrmod_pickup_range 1.0")
+					LocalPlayer():ConCommand("vrmod_pickup_range 1.2")
 				end
 			--command end
 			end
@@ -229,19 +229,16 @@ function VREaddvrmenuOpen()
 					button5on = 1
 					LocalPlayer():ConCommand("vrmod_attach_weaponmenu 1")
 					LocalPlayer():ConCommand("vrmod_attach_quickmenu 1")
-					LocalPlayer():ConCommand("vre_ui_attachtohand 1")
 
 				elseif button5on == 1 then
 					button5on = 2
 					LocalPlayer():ConCommand("vrmod_attach_weaponmenu 4")
 					LocalPlayer():ConCommand("vrmod_attach_quickmenu 4")
-					LocalPlayer():ConCommand("vre_ui_attachtohand 0")
 
 				else
 					button5on = 0
 					LocalPlayer():ConCommand("vrmod_attach_weaponmenu 3")
 					LocalPlayer():ConCommand("vrmod_attach_quickmenu 3")
-					LocalPlayer():ConCommand("vre_ui_attachtohand 0")
 				end
 			--command end
 			end
@@ -260,29 +257,29 @@ function VREaddvrmenuOpen()
  
  --2button toggle start
 
-			local button6 = vgui.Create("DButton")
-			button6:SetText("r_3dsky: ")
-			button6:SetSize(120, 60)
-			button6:SetTextColor(Color(255, 255, 255))
-			grid:AddItem(button6)
-			button6.DoClick = function()
-			--command start
-				if button6on == 1 then
-					button6on = 0
-					LocalPlayer():ConCommand("r_3dsky 0")
+			-- local button6 = vgui.Create("DButton")
+			-- button6:SetText("r_3dsky: ")
+			-- button6:SetSize(120, 60)
+			-- button6:SetTextColor(Color(255, 255, 255))
+			-- grid:AddItem(button6)
+			-- button6.DoClick = function()
+			-- --command start
+				-- if button6on == 1 then
+					-- button6on = 0
+					-- LocalPlayer():ConCommand("r_3dsky 0")
 
-				else
-					button6on = 1
-					LocalPlayer():ConCommand("r_3dsky 1")
+				-- else
+					-- button6on = 1
+					-- LocalPlayer():ConCommand("r_3dsky 1")
 
-				end
-			--command end
-			end
+				-- end
+			-- --command end
+			-- end
 
-			function button6:Paint(w, h)
-				button6:SetText("r_3dsky : "..GetConVar("r_3dsky"):GetInt())
-				draw.RoundedBox(6, 0, 0, w, h, BUTTON_2TIER[math.abs(button6on -2)])
-			end
+			-- function button6:Paint(w, h)
+				-- button6:SetText("r_3dsky : "..GetConVar("r_3dsky"):GetInt())
+				-- draw.RoundedBox(6, 0, 0, w, h, BUTTON_2TIER[math.abs(button6on -2)])
+			-- end
 
 -- 6
 -- r_3dsky 
@@ -334,7 +331,7 @@ function VREaddvrmenuOpen()
 				if button8on == 0 then
 				   button8on = 1
 					LocalPlayer():ConCommand("vrmod_keymode_restore")
-																														
+
 				elseif button8on == 1 then
 					button8on = 2
 					LocalPlayer():ConCommand("vrmod_keymode_main")

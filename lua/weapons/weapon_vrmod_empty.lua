@@ -6,8 +6,8 @@ SWEP.SlotPos = 0
 
 SWEP.Spawnable = true
 SWEP.Category = "VRMOD"
-SWEP.UseHands = false
-SWEP.ViewModel = ""
+SWEP.UseHands = true
+SWEP.ViewModel = "models/weapons/c_arms.mdl"
 SWEP.WorldModel = ""
 
 SWEP.DrawAmmo = false
@@ -23,7 +23,6 @@ SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
 
 function  SWEP:Deploy()
-	self:SetWeaponModel( nil )
 	self:SetHoldType( "normal" )
 end
 

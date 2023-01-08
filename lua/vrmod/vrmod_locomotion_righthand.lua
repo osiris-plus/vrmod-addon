@@ -37,7 +37,7 @@ hook.Add("VRMod_Input","teleport",function( action, pressed )
 					local nextPos = controllerPos+controllerDir*50*d+Vector(0,0,-d*d*3)
 					local v = nextPos-prevPos
 					if not hit then
-						local tr = util.TraceLine({start=prevPos, endpos = prevPos+v, filter = LocalPlayer()})
+						local tr = util.TraceLine({start=prevPos, endpos = prevPos+v, filter = LocalPlayer(), mask = MASK_PLAYERSOLID})
 						hit = tr.Hit
 						if hit then
 							tpBeamMatrices[1] = Matrix()
@@ -158,6 +158,7 @@ local function start()
 			return
 		end
 
+		-- cmd:SetButtons( bit.bor(cmd:GetButtons(), g_VR.input.boolean_jump and IN_JUMP  or 0,  g_VR.input.boolean_sprint and IN_SPEED or 0, moveType == MOVETYPE_LADDER and IN_FORWARD or 0, (g_VR.tracking.hmd.pos.z < ( g_VR.origin.z + convarValues.crouchThreshold )) and IN_DUCK or 0 ) )
 		cmd:SetButtons( bit.bor(cmd:GetButtons(), g_VR.input.boolean_jump and IN_JUMP + IN_DUCK or 0,  g_VR.input.boolean_sprint and IN_SPEED or 0, moveType == MOVETYPE_LADDER and IN_FORWARD or 0, (g_VR.tracking.hmd.pos.z < ( g_VR.origin.z + convarValues.crouchThreshold )) and IN_DUCK or 0 ) )
 		--set view angles to viewmodel muzzle angles for engine weapon support, note: movement is relative to view angles
 		local viewAngles = g_VR.currentvmi and g_VR.currentvmi.wrongMuzzleAng and g_VR.tracking.pose_righthand.ang or g_VR.viewModelMuzzle and g_VR.viewModelMuzzle.Ang or g_VR.tracking.pose_righthand.ang 
