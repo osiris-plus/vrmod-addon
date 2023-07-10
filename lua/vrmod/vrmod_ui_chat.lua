@@ -4,6 +4,7 @@ if CLIENT then
 	local chatLog = {}
 	local chatPanel = nil
 	local nametags = false
+	local VRClipboard = CreateClientConVar("vrmod_Clipboard","",false,false,"")
 	
 	hook.Add("VRMod_Start","voicepermissions",function(ply)
 
@@ -151,7 +152,7 @@ if CLIENT then
 						surface.DrawOutlinedRect(0,0,w,h)
 					end
 					local lowerCase = "1234567890\1\nqwertyuiop\nasdfghjkl\2\n\3zxcvbnm*.\3\n "
-					local upperCase = "!\"#$%&+=?-\1\nQWERTYUIOP\nASDFGHJKL\2\n\3ZXCVBNM_:\3\n "
+					local upperCase = "!\"#$/&+=?-\1\nQWERTYUIOP\nASDFGHJKL\2\n\3ZXCVBNM_:\3\n "
 					local selectedCase = lowerCase
 					local keys = {}
 					local function updateKeyboard()
@@ -182,6 +183,7 @@ if CLIENT then
 							elseif key:GetText() == "Enter" then
 								if nametags then
 								LocalPlayer():ConCommand(""..chatPanel.msgbar:GetText())
+								VRClipboard:SetString(""..chatPanel.msgbar:GetText())
 								SetClipboardText(""..chatPanel.msgbar:GetText())
 								else
 								LocalPlayer():ConCommand("say "..chatPanel.msgbar:GetText())

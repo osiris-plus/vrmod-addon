@@ -64,8 +64,9 @@ if CLIENT then
 	end
 	
 	function vrmod.UsingEmptyHands( ply )
+		local emptyhandrepl = CreateConVar("vrmod_emptyhanded_swep","weapon_vrmod_empty",FCVAR_ARCHIVE+FCVAR_REPLICATED)
 		local wep = ply and ply:GetActiveWeapon() or LocalPlayer():GetActiveWeapon()
-		return IsValid(wep) and wep:GetClass() == "weapon_vrmod_empty" or false
+		return IsValid(wep) and wep:GetClass() == emptyhandrepl:GetString() or false
 	end
 	
 	function vrmod.GetHMDPos( ply )
@@ -445,7 +446,7 @@ if CLIENT then
 		locomotionPanel:Add(DComboBox)
 		DComboBox:Dock( TOP )
 		DComboBox:DockMargin( 70, 0, 0, 5 )
-		DComboBox:SetValue("none")
+		DComboBox:SetValue("!ERROR!(Click me to select another item)")
 		for i = 1,#g_VR.locomotionOptions do
 			DComboBox:AddChoice( g_VR.locomotionOptions[i].name )
 		end
@@ -549,8 +550,10 @@ elseif SERVER then
 	end
 	
 	function vrmod.UsingEmptyHands( ply )
+		local emptyhandrepl = CreateConVar("vrmod_emptyhanded_swep","weapon_vrmod_empty",FCVAR_ARCHIVE+FCVAR_REPLICATED)
+
 		local wep = ply:GetActiveWeapon()
-		return IsValid(wep) and wep:GetClass() == "weapon_vrmod_empty" or false
+		return IsValid(wep) and wep:GetClass() == emptyhandrepl:GetString() or false
 	end
 	
 	local function UpdateWorldPoses( ply, playerTable )

@@ -3,6 +3,9 @@ if SERVER then return end
 local open = false
 
 function g_VR.MenuOpen()
+	local vr_mapbrowser_enable = CreateClientConVar("vrmod_mapbrowser_enable", "1") 
+	local shutdownbutton = CreateClientConVar("vrmod_shutdownmenu","1")
+
 	if hook.Call("VRMod_OpenQuickMenu") == false then return end
 
 	if open then return end
@@ -48,6 +51,26 @@ function g_VR.MenuOpen()
 	--uid, width, height, panel, attachment, pos, ang, scale, cursorEnabled, closeFunc
 	local mode = convarValues.vrmod_attach_quickmenu
 
+
+	--add button start
+
+	if vr_mapbrowser_enable:GetBool() then
+			vrmod.AddInGameMenuItem("Map Browser", 0, 0, function()
+				LocalPlayer():ConCommand("vrmod_mapbrowser")
+			end)
+		else
+			vrmod.RemoveInGameMenuItem("Map Browser")
+	end
+
+			if shutdownbutton:GetBool() then
+				vrmod.AddInGameMenuItem("VR EXIT", 0, 0, function()
+				LocalPlayer():ConCommand("vrmod_exit")
+					end)
+			else
+				vrmod.RemoveInGameMenuItem("VR EXIT")
+			end
+
+	--add button end
 
 	if mode == 1 then
 	VRUtilMenuOpen("miscmenu",512, 512, nil, 1, Vector(4,6,5.5), Angle(0,-90,10), 0.03, true, function()

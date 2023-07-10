@@ -1,9 +1,9 @@
 if CLIENT then
 
+
 	-- local _, convarValues = vrmod.GetConvars()
 	-- local mode = convarValues.vrmod_testmenu
 	local button1on = 0
-	
 	
 		vrmod.AddInGameMenuItem("seated mode",1,2,function()
 			if button1on == 1 then
@@ -32,22 +32,13 @@ if CLIENT then
 			
 
 			
-			vrmod.AddInGameMenuItem("VRE addmenu", 0, 3, function()
+			vrmod.AddInGameMenuItem("VRE addmenu", 0, 2, function()
 				LocalPlayer():ConCommand("vre_addvrmenu")
 			end)		
 
-			vrmod.AddInGameMenuItem("vre gb-radial", 0, 4, function()
+			vrmod.AddInGameMenuItem("vre gb-radial", 0, 3, function()
 				LocalPlayer():ConCommand("vre_gb-radial")
 			end)			
-
-			
-			
-
-
-
-			
-		
-
 
 --
 end

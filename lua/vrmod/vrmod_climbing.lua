@@ -1175,7 +1175,7 @@ if CLIENT then
 
 								end)
 
-								input.SelectWeapon(LocalPlayer():GetWeapon("weapon_vrmod_empty"))
+								-- input.SelectWeapon(LocalPlayer():GetWeapon("weapon_vrmod_empty"))
 								break
 							end
 						end

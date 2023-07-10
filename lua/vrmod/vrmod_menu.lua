@@ -6,16 +6,20 @@ surface.CreateFont( "vrmod_Trebuchet24", {
 	weight = 100
 } )
 
-local menushutdown = CreateClientConVar("vrmod_open_menu_shutdown","0",FCVAR_ARCHIVE)
+local menumcore = CreateClientConVar("vrmod_open_menu_automcore","1",true,FCVAR_ARCHIVE)
+local contexticon = CreateClientConVar("vrmod_enable_contextmenu_button","1",true,FCVAR_ARCHIVE)
 
 
 local frame = nil
 
 local function OpenMenu()
 
-	if menushutdown:GetBool() then
-		LocalPlayer():ConCommand("vrmod_exit")
+
+	if menumcore:GetBool() then
+		LocalPlayer():ConCommand("gmod_mcore_test 0")
 	end
+
+
 	
 	if IsValid(frame) then return frame end
 
@@ -132,15 +136,42 @@ end )
 
 local convars = vrmod.AddCallbackedConvar("vrmod_showonstartup", nil, "0")
 
-if convars.vrmod_showonstartup:GetBool() then
-	hook.Add("CreateMove","vrmod_showonstartup",function()
-		hook.Remove("CreateMove","vrmod_showonstartup")
-		timer.Simple(1,function()
-			RunConsoleCommand("vrmod")
-		end)
-	end)
+if contexticon:GetBool() then
+	list.Set( "DesktopWindows", "vrmod_context", {
+		title = "VRMod_Menu",
+		icon = "icon16/find.png",
+		init		= function()
+			LocalPlayer():ConCommand("vrmod")
+			LocalPlayer():ConCommand("-menu_context")
+		end
+	})		
 end
 
+hook.Add( "PopulateToolMenu", "vrmod_addspawnmenu", function()
+	spawnmenu.AddToolMenuOption( "Utilities", "Virtual Reality", "VRMod SemiOffcial", "VRMod SemiOffcial", "", "", function( panel )
+			--DButton Start
+				--vrmod_spawnmenu
+				local vrmod_spawnmenu = vgui.Create( "DButton", panel ) -- Create the button and parent it to the frame
+				vrmod_spawnmenu:SetText( "VRMOD MENU" )					-- Set the text on the button
+				vrmod_spawnmenu:SetPos( 20, 30 )					-- Set the position on the frame
+				vrmod_spawnmenu:SetSize( 330, 30 )					-- Set the size
+				vrmod_spawnmenu.DoClick = function()				-- A custom function run when clicked ( note the . instead of : )
+					RunConsoleCommand( "vrmod" )			-- Run the console command "say hi" when you click it ( command, args )
+					LocalPlayer():ConCommand("-menu")
+				end
+
+				vrmod_spawnmenu.DoRightClick = function()
+					RunConsoleCommand( "vrmod" )					
+					LocalPlayer():ConCommand("-menu")
+					LocalPlayer():ConCommand("-menu")
+				end
+			--DButton end		
+
+
+
+
+	end)
+end)
 
 
 vrmod.AddInGameMenuItem("Settings", 4, 0, function()

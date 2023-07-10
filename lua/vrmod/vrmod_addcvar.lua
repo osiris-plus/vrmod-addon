@@ -1,15 +1,60 @@
 
 
 if CLIENT then
-																			
-																				
-																			
 
 	local _,convars,convarValues = vrmod.GetConvars()
 
 	local drivingmode = 0
 	local bothmode = 0
 	local ply = LocalPlayer()
+	
+	-- local hands = {
+		-- {
+			-- poseName = "pose_lefthand",
+			-- overrideFunc = vrmod.SetLeftHandPose,
+			-- getFunc = vrmod.GetLeftHandPose
+		-- },
+		-- {
+			-- poseName = "pose_righthand",
+			-- overrideFunc = vrmod.SetRightHandPose,
+			-- getFunc = vrmod.GetRightHandPose,
+		-- },
+	-- }
+
+
+-- concommand.Add("vrmod_print_righthand_pos", function(ply)
+-- print(g_VR.tracking.pose_righthand.pos)
+-- end)
+
+-- concommand.Add("vrmod_print_righthand_pos_x", function(ply)
+-- print(g_VR.tracking.pose_righthand.pos.x)
+-- end)
+
+
+-- concommand.Add("vrmod_print_righthand_pos_y", function(ply)
+-- print(g_VR.tracking.pose_righthand.pos.y)
+-- end)
+
+-- concommand.Add("vrmod_print_righthand_pos_z", function(ply)
+-- print(g_VR.tracking.pose_righthand.pos.z)
+-- end)
+
+-- concommand.Add("vrmod_print_righthand_ang", function(ply)
+-- print(g_VR.tracking.pose_righthand.ang)
+-- end)
+
+-- concommand.Add("vrmod_print_righthand_ang_x", function(ply)
+-- print(g_VR.tracking.pose_righthand.ang.x)
+-- end)
+
+-- concommand.Add("vrmod_print_righthand_ang_y", function(ply)
+-- print(g_VR.tracking.pose_righthand.ang.y)
+-- end)
+
+-- concommand.Add("vrmod_print_righthand_ang_z", function(ply)
+-- print(g_VR.tracking.pose_righthand.ang.z)
+-- end)
+
 
 	concommand.Add( "vrmod_keymode_restore", function( ply, cmd, args )
 		bothmode = 0
@@ -64,8 +109,8 @@ if CLIENT then
 			
 	concommand.Add( "vrmod_character_restart", function( ply, cmd, args )
 		LocalPlayer():ConCommand("vrmod_exit")
-		AddCSLuaFile("vrmodunoffcial/vrmod_character.lua")
-		include("vrmodunoffcial/vrmod_character.lua")
+		AddCSLuaFile("vrmod/vrmod_character.lua")
+		include("vrmod/vrmod_character.lua")
 		LocalPlayer():ConCommand("vrmod_start")	
 	end)
 
@@ -98,16 +143,30 @@ if CLIENT then
 
 	end)
 	
-	concommand.Add( "vrmod_character_heightadjestmode", function( ply, cmd, args )
-		LocalPlayer():ConCommand("vrmod_characterEyeHeight 25.0")
-			print("vrmod_characterEyeHeight 25.0")
-		LocalPlayer():ConCommand("vrmod_scale 38.7")
-			print("vrmod_scale 38.7")
-		LocalPlayer():ConCommand("vrmod_seatedoffset 1.00")
-			print("vrmod_seatedoffset 1.00")
-		LocalPlayer():ConCommand("vrmod_seated 1")
-			print("vrmod_seated 1")
-	end)
+	
+	-- concommand.Add( "vrmod_character_reset", function( ply, cmd, args )
+	-- 	LocalPlayer():ConCommand("vrmod_characterEyeHeight 66.8")
+	-- 		print("vrmod_characterEyeHeight 66.8")
+	-- 	LocalPlayer():ConCommand("vrmod_characterHeadToHmdDist 6.3")
+	-- 		print("vrmod_characterHeadToHmdDist 6.3")
+	-- 	LocalPlayer():ConCommand("vrmod_scale 38.7")
+	-- 		print("vrmod_scale 38.7")
+	-- 	LocalPlayer():ConCommand("vrmod_crouchthreshold 40.0")
+	-- 		print("vrmod_crouchthreshold 40.0")
+
+	-- end)
+
+
+	-- concommand.Add( "vrmod_character_heightadjestmode", function( ply, cmd, args )
+		-- LocalPlayer():ConCommand("vrmod_characterEyeHeight 25.0")
+			-- print("vrmod_characterEyeHeight 25.0")
+		-- LocalPlayer():ConCommand("vrmod_scale 38.7")
+			-- print("vrmod_scale 38.7")
+		-- LocalPlayer():ConCommand("vrmod_seatedoffset 1.00")
+			-- print("vrmod_seatedoffset 1.00")
+		-- LocalPlayer():ConCommand("vrmod_seated 1")
+			-- print("vrmod_seated 1")
+	-- end)
 
 	
 	concommand.Add( "vrmod_lfsmode", function( ply, cmd, args )
@@ -130,8 +189,8 @@ if CLIENT then
 			print("gmod_mcore_test 0")
 		LocalPlayer():ConCommand("mat_antialias 0")
 			print("mat_antialias 0")
-		LocalPlayer():ConCommand("snd_restart")
-			print("snd_restart")
+		-- LocalPlayer():ConCommand("snd_restart")
+		-- 	print("snd_restart")
 		LocalPlayer():ConCommand("mat_alphacoverage 0")
 			print("mat_alphacoverage 0")
 		LocalPlayer():ConCommand("mat_motion_blur_enabled 0")

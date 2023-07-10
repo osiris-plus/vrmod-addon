@@ -74,234 +74,92 @@ function VREaddvrmenuOpen()
 	
 	
 
---2button toggle start
-
-			local button1 = vgui.Create("DButton")
-			button1:SetText("pickup_disable: ")
-			button1:SetSize(120, 60)
-			button1:SetTextColor(Color(255, 255, 255))
-			grid:AddItem(button1)
-			button1.DoClick = function()
-			--command start
-				if button1on == 1 then
-					button1on = 0
-					LocalPlayer():ConCommand("vr_pickup_disable_client 1")
-
-				else
-					button1on = 1
-					LocalPlayer():ConCommand("vr_pickup_disable_client 0")
-
-				end
-			--command end
-			end
-
-			function button1:Paint(w, h)
-				button1:SetText("pickup_disable: "..GetConVar("vr_pickup_disable_client"):GetInt())
-				draw.RoundedBox(8, 0, 0, w, h, BUTTON_2TIER[math.abs(button1on -2)])
-			end
-
--- 1
--- attach_quickmenu
--- vrmod_attach_quickmenu
---2button toggle end
-
-
---button toggle start
-
-				local button2 = vgui.Create("DButton")
-				button2:SetText("Pickup Weight(server):")
-				button2:SetSize(120, 60)
-				button2:SetTextColor(Color(255, 255, 255))
-				grid:AddItem(button2)
-				button2.DoClick = function()
-				--command start
-					if button2on == 0 then
-					   button2on = 1
-						LocalPlayer():ConCommand("vrmod_pickup_weight 5")
-					elseif button2on == 1 then
-						button2on = 2
-						LocalPlayer():ConCommand("vrmod_pickup_weight 100")
-					elseif button2on == 2 then
-						button2on = 3
-						LocalPlayer():ConCommand("vrmod_pickup_weight 99999")
-					else
-						button2on = 0
-						LocalPlayer():ConCommand("vrmod_pickup_weight 30")
-					end
-				--command end
-				end
-
-				function button2:Paint(w, h)
-					button2:SetText("Pickup Weight \n (server): "..GetConVar("vrmod_pickup_weight"):GetInt())
-					draw.RoundedBox(8, 0, 0, w, h, BUTTON_4TIER[math.abs(button2on+1)])
-				end
-
---button toggle end
-
-
---button toggle start
-
-			local button3 = vgui.Create("DButton")
-			button3:SetText("pickup_range:")
-			button3:SetSize(120, 60)
-			button3:SetTextColor(Color(255, 255, 255))
-			grid:AddItem(button3)
-			button3.DoClick = function()
-			--command start
-				if button3on == 0 then
-				   button3on = 1
-					LocalPlayer():ConCommand("vrmod_pickup_range 2.0")
-				elseif button3on == 1 then
-					button3on = 2
-					LocalPlayer():ConCommand("vrmod_pickup_range 5.0")
-
-				elseif button3on == 2 then
-					button3on = 3
-					LocalPlayer():ConCommand("vrmod_pickup_range 10.00")
-				elseif button3on == 3 then
-					button3on = 4
-					LocalPlayer():ConCommand("vrmod_pickup_range 99.00")
-				else
-					button3on = 0
-					LocalPlayer():ConCommand("vrmod_pickup_range 1.2")
-				end
-			--command end
-			end
-
-			function button3:Paint(w, h)
-				button3:SetText("pickup_range: "..GetConVar("vrmod_pickup_range"):GetFloat())
-				draw.RoundedBox(8, 0, 0, w, h, BUTTON_5TIER[button3on+1])
-			end
-
---button toggle end
-
-
-
-
   
 --3button toggle start
 
-			local button4 = vgui.Create("DButton")
-			button4:SetText("attach_popup: ")
-			local ccval4 = {"HMD", "Left","Right"}
-			button4:SetSize(120, 60)
-			button4:SetTextColor(Color(255, 255, 255))
-			grid:AddItem(button4)
-			button4.DoClick = function()
+			local button2 = vgui.Create("DButton")
+			button2:SetText("attach_popup: ")
+			local ccval2 = {"HMD", "Left","Right"}
+			button2:SetSize(120, 60)
+			button2:SetTextColor(Color(255, 255, 255))
+			grid:AddItem(button2)
+			button2.DoClick = function()
 			--command start
-				if button4on == 0 then
-					button4on = 1
+				if button2on == 0 then
+					button2on = 1
 					LocalPlayer():ConCommand("vrmod_attach_popup 1")
 
-				elseif button4on == 1 then
-					button4on = 2
+				elseif button2on == 1 then
+					button2on = 2
 					LocalPlayer():ConCommand("vrmod_attach_popup 4")
 
 				else
-					button4on = 0
+					button2on = 0
 					LocalPlayer():ConCommand("vrmod_attach_popup 3")
 
 				end
 			--command end
 			end
 
-			function button4:Paint(w, h)
-				button4:SetText("attach_popup: "..ccval4[button4on+1])
-				draw.RoundedBox(8, 0, 0, w, h, BUTTON_3TIER[math.abs(button4on +1)])
+			function button2:Paint(w, h)
+				button2:SetText("attach_popup: "..ccval2[button2on+1])
+				draw.RoundedBox(8, 0, 0, w, h, BUTTON_3TIER[math.abs(button2on +1)])
 			end
 
--- 4
--- attach_weaponmenu
--- vrmod_attach_weaponmenu
 --3button toggle end
   
   --3button toggle start
 
-			local button5 = vgui.Create("DButton")
-			button5:SetText("attach Menu hand")
-			local ccval5 = {"HMD", "Left","Right"}
-			button5:SetSize(120, 60)
-			button5:SetTextColor(Color(255, 255, 255))
-			grid:AddItem(button5)
-			button5.DoClick = function()
+			local button3 = vgui.Create("DButton")
+			button3:SetText("attach Menu hand")
+			local ccval3 = {"HMD", "Left","Right"}
+			button3:SetSize(120, 60)
+			button3:SetTextColor(Color(255, 255, 255))
+			grid:AddItem(button3)
+			button3.DoClick = function()
 			--command start
-				if button5on == 0 then
-					button5on = 1
+				if button3on == 0 then
+					button3on = 1
 					LocalPlayer():ConCommand("vrmod_attach_weaponmenu 1")
 					LocalPlayer():ConCommand("vrmod_attach_quickmenu 1")
 
-				elseif button5on == 1 then
-					button5on = 2
+				elseif button3on == 1 then
+					button3on = 2
 					LocalPlayer():ConCommand("vrmod_attach_weaponmenu 4")
 					LocalPlayer():ConCommand("vrmod_attach_quickmenu 4")
 
 				else
-					button5on = 0
+					button3on = 0
 					LocalPlayer():ConCommand("vrmod_attach_weaponmenu 3")
 					LocalPlayer():ConCommand("vrmod_attach_quickmenu 3")
 				end
 			--command end
 			end
 
-			function button5:Paint(w, h)
-				button5:SetText("attach Menu hand: "..ccval5[button5on+1])
-				draw.RoundedBox(8, 0, 0, w, h, BUTTON_3TIER[math.abs(button5on +1)])
+			function button3:Paint(w, h)
+				button3:SetText("attach Menu hand: "..ccval3[button3on+1])
+				draw.RoundedBox(8, 0, 0, w, h, BUTTON_3TIER[math.abs(button3on +1)])
 			end
 
--- 5
--- attach_weaponmenu
--- vrmod_attach_weaponmenu
 --3button toggle end
   
-  
- 
- --2button toggle start
-
-			-- local button6 = vgui.Create("DButton")
-			-- button6:SetText("r_3dsky: ")
-			-- button6:SetSize(120, 60)
-			-- button6:SetTextColor(Color(255, 255, 255))
-			-- grid:AddItem(button6)
-			-- button6.DoClick = function()
-			-- --command start
-				-- if button6on == 1 then
-					-- button6on = 0
-					-- LocalPlayer():ConCommand("r_3dsky 0")
-
-				-- else
-					-- button6on = 1
-					-- LocalPlayer():ConCommand("r_3dsky 1")
-
-				-- end
-			-- --command end
-			-- end
-
-			-- function button6:Paint(w, h)
-				-- button6:SetText("r_3dsky : "..GetConVar("r_3dsky"):GetInt())
-				-- draw.RoundedBox(6, 0, 0, w, h, BUTTON_2TIER[math.abs(button6on -2)])
-			-- end
-
--- 6
--- r_3dsky 
--- r_3dsky 
---2button toggle end
 
 --2button toggle start
 			local teleposerver = GetConVar("vrmod_allow_teleport")
 			if teleposerver:GetBool()then
-				local button7 = vgui.Create("DButton")
-				button7:SetText("allow_teleport: ")
-				button7:SetSize(120, 60)
-				button7:SetTextColor(Color(255, 255, 255))
-				grid:AddItem(button7)
-				button7.DoClick = function()
+				local button4 = vgui.Create("DButton")
+				button4:SetText("allow_teleport: ")
+				button4:SetSize(120, 60)
+				button4:SetTextColor(Color(255, 255, 255))
+				grid:AddItem(button4)
+				button4.DoClick = function()
 				--command start
-					if button7on == 1 then
-						button7on = 0
+					if button4on == 1 then
+						button4on = 0
 						LocalPlayer():ConCommand("vrmod_allow_teleport_client 0")
 
 					else
-						button7on = 1
+						button4on = 1
 						local teleposerver = GetConVar("vrmod_allow_teleport")
 						if teleposerver:GetBool()then
 						LocalPlayer():ConCommand("vrmod_allow_teleport_client 1")
@@ -311,37 +169,37 @@ function VREaddvrmenuOpen()
 				--command end
 				end
 
-				function button7:Paint(w, h)
-					button7:SetText("allow_teleport: "..GetConVar("vrmod_allow_teleport_client"):GetInt())
-					draw.RoundedBox(8, 0, 0, w, h, BUTTON_2TIER[math.abs(button7on -2)])
+				function button4:Paint(w, h)
+					button4:SetText("allow_teleport: "..GetConVar("vrmod_allow_teleport_client"):GetInt())
+					draw.RoundedBox(8, 0, 0, w, h, BUTTON_2TIER[math.abs(button4on -2)])
 				end
 			end
 
 --2button toggle start
 
-			local button8 = vgui.Create("DButton")
-			-- local button8on = button8on
-			local ccval8 = {"both", "normal", "Walk", "Drive"}
-			button8:SetText("keymode: ")
-			button8:SetSize(120, 60)
-			button8:SetTextColor(Color(255, 255, 255))
-			grid:AddItem(button8)
-			button8.DoClick = function()
+			local button5 = vgui.Create("DButton")
+			-- local button5on = button5on
+			local ccval5 = {"both", "normal", "Walk", "Drive"}
+			button5:SetText("keymode: ")
+			button5:SetSize(120, 60)
+			button5:SetTextColor(Color(255, 255, 255))
+			grid:AddItem(button5)
+			button5.DoClick = function()
 			--command start
-				if button8on == 0 then
-				   button8on = 1
+				if button5on == 0 then
+				   button5on = 1
 					LocalPlayer():ConCommand("vrmod_keymode_restore")
 
-				elseif button8on == 1 then
-					button8on = 2
+				elseif button5on == 1 then
+					button5on = 2
 					LocalPlayer():ConCommand("vrmod_keymode_main")
 					
-				elseif button8on == 2 then
-					button8on = 3
+				elseif button5on == 2 then
+					button5on = 3
 					LocalPlayer():ConCommand("vrmod_keymode_driving")
 
 				else
-					button8on = 0
+					button5on = 0
 					LocalPlayer():ConCommand("vrmod_keymode_both")
 				end
 
@@ -349,14 +207,11 @@ function VREaddvrmenuOpen()
 						
 			end
 
-			function button8:Paint(w, h)
-				button8:SetText("keymode: "..ccval8[button8on+1])
-				draw.RoundedBox(8, 0, 0, w, h, BUTTON_4TIER[button8on+1])
+			function button5:Paint(w, h)
+				button5:SetText("keymode: "..ccval5[button5on+1])
+				draw.RoundedBox(8, 0, 0, w, h, BUTTON_4TIER[button5on+1])
 			end
 
--- 8
--- keymode:
--- (converhere)
 --2button toggle end
 
 
@@ -364,183 +219,221 @@ function VREaddvrmenuOpen()
 
 --2button toggle start
 
-			local button9 = vgui.Create("DButton")
-			button9:SetText("VehicleMode: ")
-			local ccval9 = {"LFS","Normal"}
-			button9:SetSize(120, 60)
-			button9:SetTextColor(Color(255, 255, 255))
-			grid:AddItem(button9)
-			button9.DoClick = function()
+			local button6 = vgui.Create("DButton")
+			button6:SetText("Vehicle mode\n")
+			local ccval6 = {"[simfphys/HL2Jeep]\nLFS/TANK","simfphys/HL2Jeep\n[LFS/TANK]"}
+			button6:SetSize(120, 60)
+			button6:SetTextColor(Color(255, 255, 255))
+			grid:AddItem(button6)
+			button6.DoClick = function()
 			--command start
-				if button9on == 1 then
-					button9on = 0
-					LocalPlayer():ConCommand("vrmod_lfsmode")
-
-				else
-					button9on = 1
+				if button6on == 1 then
+					button6on = 0
 					LocalPlayer():ConCommand("vrmod_simfmode")
+
+				else
+					button6on = 1
+					LocalPlayer():ConCommand("vrmod_lfsmode")
 								 
-																																			 
 				end
 			--command end
 			end
 
-			function button9:Paint(w, h)
-				button9:SetText("VehicleMode: "..ccval9[button9on+1])
-				draw.RoundedBox(8, 0, 0, w, h, BUTTON_2TIER[math.abs(button9on -2)])
+			function button6:Paint(w, h)
+				button6:SetText("Vehicle mode\n"..ccval6[button6on+1])
+				draw.RoundedBox(8, 0, 0, w, h, BUTTON_2TIER[math.abs(button6on -2)])
 			end
 
--- 9
--- VehicleMode
--- (converhere)
 --2button toggle end
 
 
 --2button toggle start
 
-			local buttonA = vgui.Create("DButton")
-			buttonA:SetText("Laserpointer: ")
-			buttonA:SetSize(120, 60)
-			buttonA:SetTextColor(Color(255, 255, 255))
-			grid:AddItem(buttonA)
-			buttonA.DoClick = function()
+			local button7 = vgui.Create("DButton")
+			button7:SetText("Laserpointer: ")
+			button7:SetSize(120, 60)
+			button7:SetTextColor(Color(255, 255, 255))
+			grid:AddItem(button7)
+			button7.DoClick = function()
 			--command start
-				if buttonAon == 1 then
-					buttonAon = 0
+				if button7on == 1 then
+					button7on = 0
 					LocalPlayer():ConCommand("vrmod_togglelaserpointer")
 
 				else
-					buttonAon = 1
+					button7on = 1
 					LocalPlayer():ConCommand("vrmod_togglelaserpointer")
 
 				end
 			--command end
 			end
 
-			function buttonA:Paint(w, h)
-				buttonA:SetText("Laserpointer: "..GetConVar("vrmod_laserpointer"):GetInt())
-				draw.RoundedBox(8, 0, 0, w, h, BUTTON_2TIER[math.abs(buttonAon -2)])
+			function button7:Paint(w, h)
+				button7:SetText("Laserpointer: "..GetConVar("vrmod_laserpointer"):GetInt())
+				draw.RoundedBox(8, 0, 0, w, h, BUTTON_2TIER[math.abs(button7on -2)])
 			end
 
--- A
--- Laserpointer
--- vrmod_togglelaserpointer
 --2button toggle end
 
 
 
+if not !GetConVar("arcticvr_2h_sens") then
+
+	--button toggle start
 
 
---button toggle start
-
-
-			local buttonB = vgui.Create("DButton")
-			buttonB:SetText("ArcVR:ForeGrip-POW :")
-			buttonB:SetSize(120, 60)
-			local ccvalB = {"0.5", "1.0", "2.0"}
-			buttonB:SetTextColor(Color(255, 255, 255))
-			grid:AddItem(buttonB)
-			buttonB.DoClick = function()
-			--command start
-				if buttonBon == 0 then
-				   buttonBon = 1
-				LocalPlayer():ConCommand("arcticvr_2h_sens 1.0")
-				elseif buttonBon == 1 then
-					buttonBon = 2
-				LocalPlayer():ConCommand("arcticvr_2h_sens 2.0")
-				else
-					buttonBon = 0
-				LocalPlayer():ConCommand("arcticvr_2h_sens 0.5")				
-				end
-			--command end
-			end
-
-			function buttonB:Paint(w, h)
-				buttonB:SetText("ArcVR:ForeGrip-POW :"..GetConVar("arcticvr_2h_sens"):GetInt())
-				draw.RoundedBox(8, 0, 0, w, h, BUTTON_3TIER[buttonBon+1])
-			end
-
---button toggle end
-
---button toggle start
-
-			local buttonC = vgui.Create("DButton")
-			buttonC:SetText("ArcVR_PouchMode: \n")
-			buttonC:SetSize(120, 60)
-			local ccvalC = {"default", "hybrid", "head", "inf"}
-			buttonC:SetTextColor(Color(255, 255, 255))
-			grid:AddItem(buttonC)
-			buttonC.DoClick = function()
-			--command start				
-				if buttonCon == 0 then
-				   buttonCon = 1
-					LocalPlayer():ConCommand("arcticvr_hybridpouch 1")
-					LocalPlayer():ConCommand("arcticvr_headpouch 0")
-					LocalPlayer():ConCommand("arcticvr_infpouch 0")
-				elseif buttonCon == 1 then
-					buttonCon = 2
-					LocalPlayer():ConCommand("arcticvr_hybridpouch 0")
-					LocalPlayer():ConCommand("arcticvr_headpouch 1")
-					LocalPlayer():ConCommand("arcticvr_infpouch 0")
-				elseif buttonCon == 2 then
-					buttonCon = 3
-					LocalPlayer():ConCommand("arcticvr_hybridpouch 0")
-					LocalPlayer():ConCommand("arcticvr_headpouch 0")
-					LocalPlayer():ConCommand("arcticvr_infpouch 1")					
-				else
-					buttonCon = 0
-					LocalPlayer():ConCommand("arcticvr_hybridpouch 0")
-					LocalPlayer():ConCommand("arcticvr_headpouch 0")
-					LocalPlayer():ConCommand("arcticvr_infpouch 0")
-				end
-			--command end
-			end
-
-			function buttonC:Paint(w, h)
-				buttonC:SetText("ArcVR_PouchMode: \n"..ccvalC[buttonCon+1])
-				draw.RoundedBox(8, 0, 0, w, h, BUTTON_4TIER[buttonCon+1])
-				if GetConVar("vrmod_floatinghands"):GetBool() then
-				buttonC:SetText("ArcVR_PouchMode \n Floating hand Mode")
-				draw.RoundedBox(8, 0, 0, w, h, BUTTON_4TIER[buttonCon+1])
+				local button8 = vgui.Create("DButton")
+				button8:SetText("ArcVR:ForeGrip-POW :")
+				button8:SetSize(120, 60)
+				button8:SetTextColor(Color(255, 255, 255))
+				grid:AddItem(button8)
+				button8.DoClick = function()
+				--command start
+					if button8on == 0 then
+					button8on = 1
+					LocalPlayer():ConCommand("arcticvr_2h_sens 1.0")
+					elseif button8on == 1 then
+						button8on = 2
+					LocalPlayer():ConCommand("arcticvr_2h_sens 2.0")
+					else
+						button8on = 0
+					LocalPlayer():ConCommand("arcticvr_2h_sens 0.5")				
+					end
+				--command end
 				end
 
+				function button8:Paint(w, h)
+					button8:SetText("ArcVR:ForeGrip-POW :"..GetConVar("arcticvr_2h_sens"):GetInt())
+					draw.RoundedBox(8, 0, 0, w, h, BUTTON_3TIER[button8on+1])
+				end
+
+	--button toggle end
+
+
+	--button toggle start
+
+				local button9 = vgui.Create("DButton")
+				button9:SetText("ArcVR_PouchMode: \n")
+				button9:SetSize(120, 60)
+				local ccval9 = {"default", "hybrid", "head", "inf"}
+				button9:SetTextColor(Color(255, 255, 255))
+				grid:AddItem(button9)
+				button9.DoClick = function()
+				--command start				
+					if button9on == 0 then
+					button9on = 1
+						LocalPlayer():ConCommand("arcticvr_hybridpouch 1")
+						LocalPlayer():ConCommand("arcticvr_headpouch 0")
+						LocalPlayer():ConCommand("arcticvr_infpouch 0")
+					elseif button9on == 1 then
+						button9on = 2
+						LocalPlayer():ConCommand("arcticvr_hybridpouch 0")
+						LocalPlayer():ConCommand("arcticvr_headpouch 1")
+						LocalPlayer():ConCommand("arcticvr_infpouch 0")
+					elseif button9on == 2 then
+						button9on = 3
+						LocalPlayer():ConCommand("arcticvr_hybridpouch 0")
+						LocalPlayer():ConCommand("arcticvr_headpouch 0")
+						LocalPlayer():ConCommand("arcticvr_infpouch 1")
+					else
+						button9on = 0
+						LocalPlayer():ConCommand("arcticvr_hybridpouch 0")
+						LocalPlayer():ConCommand("arcticvr_headpouch 0")
+						LocalPlayer():ConCommand("arcticvr_infpouch 0")
+					end
+				--command end
+				end
+
+				function button9:Paint(w, h)
+					button9:SetText("ArcVR_PouchMode: \n"..ccval9[button9on+1])
+					draw.RoundedBox(8, 0, 0, w, h, BUTTON_4TIER[button9on+1])
+					if GetConVar("vrmod_floatinghands"):GetBool() then
+					button9:SetText("ArcVR_PouchMode \n Floating hand Mode")
+					draw.RoundedBox(8, 0, 0, w, h, BUTTON_4TIER[button9on+1])
+					end
+
+				end
+
+	--button toggle end
+end
+
+if not !GetConVar("vrgrab_range") then
+	--2button toggle start
+				local buttonA = vgui.Create("DButton")
+				local ccvalA = {"Item/Gun", "Everything"}
+				buttonA:SetText("Pickup Possible\n")
+				buttonA:SetSize(120, 60)
+				buttonA:SetTextColor(Color(255, 255, 255))
+				grid:AddItem(buttonA)
+				buttonA.DoClick = function()
+				--command start
+					if buttonAon == 1 then
+						buttonAon = 0
+						LocalPlayer():ConCommand("vrmod_pickup_retry 1")
+					else
+						buttonAon = 1
+						LocalPlayer():ConCommand("vrmod_pickup_retry 0")
+					end
+				--command end
+				end
+
+				function buttonA:Paint(w, h)
+					buttonA:SetText("Pickup Possible\n"..ccvalA[buttonAon+1])
+					draw.RoundedBox(8, 0, 0, w, h, BUTTON_2TIER[math.abs(buttonAon -2)])
+				end
+	--2button toggle end
+end
+
+--2button toggle start		
+		local buttonB = vgui.Create("DButton")
+		buttonB:SetText("disable\npickup: ")
+		buttonB:SetSize(120, 60)
+		buttonB:SetTextColor(Color(255, 255, 255))
+		grid:AddItem(buttonB)
+		buttonB.DoClick = function()
+		--command start
+			if buttonBon == 1 then
+				buttonBon = 0
+				LocalPlayer():ConCommand("vr_pickup_disable_client 1")
+
+			else
+				buttonBon = 1
+				LocalPlayer():ConCommand("vr_pickup_disable_client 0")
+
 			end
+		--command end
+		end
 
---button toggle end
+		function buttonB:Paint(w, h)
+			buttonB:SetText("pickup_disable: "..GetConVar("vr_pickup_disable_client"):GetInt())
+			draw.RoundedBox(8, 0, 0, w, h, BUTTON_2TIER[math.abs(buttonBon -2)])
+		end
 
--- --2button toggle start
 
-			-- local buttonD = vgui.Create("DButton")
-			-- buttonD:SetText("character \n toggle")
-			-- buttonD:SetSize(120, 60)
-			-- buttonD:SetTextColor(Color(255, 255, 255))
-			-- grid:AddItem(buttonD)
-			-- buttonD.DoClick = function()
-			-- --command start
-				-- if buttonDon == 1 then
-					-- buttonDon = 0
-					-- LocalPlayer():ConCommand("vrmod_character_stop")
-
-				-- else
-					-- buttonDon = 1
-					-- LocalPlayer():ConCommand("vrmod_character_start")
-
-				-- end
-			-- --command end
-			-- end
-
-			-- function buttonD:Paint(w, h)
-				-- buttonD:SetText("character \n toggle")
-				-- draw.RoundedBox(8, 0, 0, w, h, BUTTON_2TIER[math.abs(buttonDon -2)])
-			-- end
-
--- -- A
--- -- Laserpointer
--- -- vrmod_togglelaserpointer
 -- --2button toggle end
 
 
 
+--2button toggle start
+			local buttonX = vgui.Create("DButton")
+			buttonX:SetText("Server Convar")
+			buttonX:SetSize(120, 60)
+			buttonX:SetTextColor(Color(255, 255, 255))
+			grid:AddItem(buttonX)
+			buttonX.DoClick = function()
+			--command start
+			LocalPlayer():ConCommand("vre_addvrmenu")
+			LocalPlayer():ConCommand("vre_svmenu")
+
+			--command end
+			end
+
+			function buttonX:Paint(w, h)
+				buttonX:SetText("Server Convar")
+				draw.RoundedBox(8, 0, 0, w, h, BUTTON_2TIER[1])
+			end
+
+--2button toggle end
 
 
 -- --2button toggle start

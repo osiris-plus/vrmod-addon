@@ -79,8 +79,8 @@ hook.Add("VRMod_Start","vrmod_starthandsonly",function(ply)
 				local info = boneinfo[i]
 				local parentInfo = boneinfo[info.parent] or info
 				local	wpos, wang = LocalToWorld(info.relativePos, info.relativeAng + info.offsetAng, parentInfo.pos, parentInfo.ang)
-				wpos = info.overridePos
-				wang = info.overrideAng
+				wpos = info.overridePos or wpos
+				wang = info.overrideAng or wang
 				local mat = Matrix()
 				mat:Translate(wpos)
 				mat:Rotate(wang)
